@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/modules.xml
+/projectSettingsUpdater.xml
+/contentModel.xml
+/.idea.GameServerUnity.iml
+# Datasource local storage ignored files
+/../../../../../../../../../:\Users\GuerreroCraft61\Documents\Unity\GameServerUnity\.idea\.idea.GameServerUnity\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
