@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 // ReSharper disable UnusedType.Global
-namespace GameServer {
+namespace Server {
     /// <summary>Sent from server to client.</summary>
     public enum ServerPackets {
         welcome = 1

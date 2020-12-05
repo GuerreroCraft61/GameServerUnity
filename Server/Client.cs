@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 
-namespace GameServer {
+namespace Server {
     public class Client {
         public static int dataBufferSize = 4096;
         public int id;

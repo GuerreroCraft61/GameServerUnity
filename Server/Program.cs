@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace GameServer {
+namespace Server {
     internal class Program {
         private static bool isRunning;
 

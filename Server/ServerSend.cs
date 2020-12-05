@@ -1,4 +1,4 @@
-﻿namespace GameServer {
+﻿namespace Server {
     public class ServerSend {
         public static void SendTCPData(int toClient, Packet packet) {
             packet.WriteLength();

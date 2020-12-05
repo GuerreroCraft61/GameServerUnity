@@ -1,4 +1,4 @@
-﻿namespace GameServer {
+﻿namespace Server {
     public class GameLogic {
         public static void Update() {
             ThreadManager.UpdateMain();

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GameServer {
+namespace Server {
     public class ServerHandle {
         public static void WelcomeReceived(int fromClient, Packet packet) {
             var clientIdCheck = packet.ReadInt();
