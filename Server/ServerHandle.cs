@@ -13,5 +13,11 @@ namespace Server {
                     $"Player \"{username}\" (ID: {fromClient}) has assumed the wrong client ID ({clientIdCheck})");
             //TODO Send player into game
         }
+
+        public static void UDPTestReceived(int fromClient, Packet packet) {
+            string msg = packet.ReadString();
+
+            Console.WriteLine($"Received packet via UDP. Contains message: {msg}");
+        }
     }
 }
