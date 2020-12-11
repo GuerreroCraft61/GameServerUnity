@@ -1,0 +1,13 @@
+F:\Users\GuerreroCraft61\Documents\Unity\GameServerUnity\Server\bin\Debug\netcoreapp3.1\Server.exe
+F:\Users\GuerreroCraft61\Documents\Unity\GameServerUnity\Server\bin\Debug\netcoreapp3.1\Server.deps.json
+F:\Users\GuerreroCraft61\Documents\Unity\GameServerUnity\Server\bin\Debug\netcoreapp3.1\Server.runtimeconfig.json
+F:\Users\GuerreroCraft61\Documents\Unity\GameServerUnity\Server\bin\Debug\netcoreapp3.1\Server.runtimeconfig.dev.json
+F:\Users\GuerreroCraft61\Documents\Unity\GameServerUnity\Server\bin\Debug\netcoreapp3.1\Server.dll
+F:\Users\GuerreroCraft61\Documents\Unity\GameServerUnity\Server\bin\Debug\netcoreapp3.1\Server.pdb
+F:\Users\GuerreroCraft61\Documents\Unity\GameServerUnity\Server\obj\Debug\netcoreapp3.1\Server.csprojAssemblyReference.cache
+F:\Users\GuerreroCraft61\Documents\Unity\GameServerUnity\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfoInputs.cache
+F:\Users\GuerreroCraft61\Documents\Unity\GameServerUnity\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfo.cs
+F:\Users\GuerreroCraft61\Documents\Unity\GameServerUnity\Server\obj\Debug\netcoreapp3.1\Server.csproj.CoreCompileInputs.cache
+F:\Users\GuerreroCraft61\Documents\Unity\GameServerUnity\Server\obj\Debug\netcoreapp3.1\Server.dll
+F:\Users\GuerreroCraft61\Documents\Unity\GameServerUnity\Server\obj\Debug\netcoreapp3.1\Server.pdb
+F:\Users\GuerreroCraft61\Documents\Unity\GameServerUnity\Server\obj\Debug\netcoreapp3.1\Server.genruntimeconfig.cache
