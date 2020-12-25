@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "EBVhwZA7/d0RD3znY0y6rR9bcL+NzWiN9ndkPQu+P40zoTIgcTwV/ubJ+crI/9gEWjdHRfMsZ3dxyQ7bPfI2RA==",
+  "dgSpecHash": "vH6kPPC7+XX7QhtxPAdnmvVQsrsGZyxSmTX0EFbtr8s6mMihmUMno6OlpsC3/1wkVyO9smZ4VO2c5mXFfTgAbA==",
   "success": true,
   "projectFilePath": "F:\\Users\\GuerreroCraft61\\Documents\\Unity\\GameServerUnity\\Server\\Server.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\GuerreroCraft61\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512"
+  ],
   "logs": []
 }

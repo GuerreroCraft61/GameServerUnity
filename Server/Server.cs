@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Net;
 using System.Net.Sockets;
-using System.Reflection;
 
 namespace Server {
     public class Server {
@@ -26,7 +26,7 @@ namespace Server {
             tcpListener.Start();
             tcpListener.BeginAcceptTcpClient(TCPConnectCallback, null);
             
-            udpListener = new UdpClient(port);
+            udpListener = new UdpClient(Server.port);
             udpListener.BeginReceive(UDPReceiveCallback, null);
 
             Console.WriteLine($"Server started on {Server.port}.");
@@ -87,11 +87,11 @@ namespace Server {
         }
 
         private static void InitializeServerData() {
-            for (var i = 1; i < maxPlayers; i++) clients.Add(i, new Client(i));
+            for (var i = 1; i <= maxPlayers; i++) clients.Add(i, new Client(i));
 
             packetHandlers = new Dictionary<int, PacketHandler> {
                 {(int) ClientPackets.welcomeReceived, ServerHandle.WelcomeReceived},
-                {(int) ClientPackets.udpTestReceived, ServerHandle.UDPTestReceived}
+                {(int) ClientPackets.playerMovement, ServerHandle.PlayerMovement}
             };
             Console.WriteLine("Initialized packets");
         }

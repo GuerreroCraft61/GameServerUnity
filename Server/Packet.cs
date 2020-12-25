@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
 // ReSharper disable UnusedType.Global
 namespace Server {
     /// <summary>Sent from server to client.</summary>
     public enum ServerPackets {
-        welcome = 1,
-        udpTest
+        welcome = 1, spawnPlayer, playerPosition,
+        playerRotation
     }
 
     /// <summary>Sent from client to server.</summary>
     public enum ClientPackets {
-        welcomeReceived = 1,
-        udpTestReceived
+        welcomeReceived = 1, playerMovement
     }
 
     public class Packet : IDisposable {
         private List<byte> buffer;
-
-        private bool disposed;
         private byte[] readableBuffer;
         private int readPos;
 
@@ -47,25 +45,7 @@ namespace Server {
             SetBytes(data);
         }
 
-        public void Dispose() {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing) {
-            if (!disposed) {
-                if (disposing) {
-                    buffer = null;
-                    readableBuffer = null;
-                    readPos = 0;
-                }
-
-                disposed = true;
-            }
-        }
-
         #region Functions
-
         /// <summary>Sets the packet's content and prepares it to be read.</summary>
         /// <param name="data">The bytes to add to the packet.</param>
         public void SetBytes(byte[] data) {
@@ -112,11 +92,9 @@ namespace Server {
                 readPos -= 4; // "Unread" the last read int
             }
         }
-
         #endregion
 
         #region Write Data
-
         /// <summary>Adds a byte to the packet.</summary>
         /// <param name="value">The byte to add.</param>
         public void Write(byte value) {
@@ -166,16 +144,31 @@ namespace Server {
             buffer.AddRange(Encoding.ASCII.GetBytes(value)); // Add the string itself
         }
 
+        /// <summary>Adds a Vector3 to the packet.</summary>
+        /// <param name="value">The string to add.</param>
+        public void Write(Vector3 value) {
+            Write(value.X);
+            Write(value.Y);
+            Write(value.Z);
+        }
+
+        /// <summary>Adds a Quaternion to the packet.</summary>
+        /// <param name="value">The string to add.</param>
+        public void Write(Quaternion value) {
+            Write(value.X);
+            Write(value.Y);
+            Write(value.Z);
+            Write(value.W);
+        }
         #endregion
 
         #region Read Data
-
         /// <summary>Reads a byte from the packet.</summary>
         /// <param name="moveReadPos">Whether or not to move the buffer's read position.</param>
         public byte ReadByte(bool moveReadPos = true) {
             if (buffer.Count > readPos) {
                 // If there are unread bytes
-                var value = readableBuffer[readPos]; // Get the byte at readPos' position
+                byte value = readableBuffer[readPos]; // Get the byte at readPos' position
                 if (moveReadPos)
                     // If _moveReadPos is true
                     readPos += 1; // Increase readPos by 1
@@ -191,7 +184,7 @@ namespace Server {
         public byte[] ReadBytes(int length, bool moveReadPos = true) {
             if (buffer.Count > readPos) {
                 // If there are unread bytes
-                var value =
+                byte[] value =
                     buffer.GetRange(readPos, length)
                         .ToArray(); // Get the bytes at readPos' position with a range of _length
                 if (moveReadPos)
@@ -208,7 +201,7 @@ namespace Server {
         public short ReadShort(bool moveReadPos = true) {
             if (buffer.Count > readPos) {
                 // If there are unread bytes
-                var value = BitConverter.ToInt16(readableBuffer, readPos); // Convert the bytes to a short
+                short value = BitConverter.ToInt16(readableBuffer, readPos); // Convert the bytes to a short
                 if (moveReadPos)
                     // If _moveReadPos is true and there are unread bytes
                     readPos += 2; // Increase readPos by 2
@@ -223,7 +216,7 @@ namespace Server {
         public int ReadInt(bool moveReadPos = true) {
             if (buffer.Count > readPos) {
                 // If there are unread bytes
-                var value = BitConverter.ToInt32(readableBuffer, readPos); // Convert the bytes to an int
+                int value = BitConverter.ToInt32(readableBuffer, readPos); // Convert the bytes to an int
                 if (moveReadPos)
                     // If _moveReadPos is true
                     readPos += 4; // Increase readPos by 4
@@ -238,7 +231,7 @@ namespace Server {
         public long ReadLong(bool moveReadPos = true) {
             if (buffer.Count > readPos) {
                 // If there are unread bytes
-                var value = BitConverter.ToInt64(readableBuffer, readPos); // Convert the bytes to a long
+                long value = BitConverter.ToInt64(readableBuffer, readPos); // Convert the bytes to a long
                 if (moveReadPos)
                     // If _moveReadPos is true
                     readPos += 8; // Increase readPos by 8
@@ -253,7 +246,7 @@ namespace Server {
         public float ReadFloat(bool moveReadPos = true) {
             if (buffer.Count > readPos) {
                 // If there are unread bytes
-                var value = BitConverter.ToSingle(readableBuffer, readPos); // Convert the bytes to a float
+                float value = BitConverter.ToSingle(readableBuffer, readPos); // Convert the bytes to a float
                 if (moveReadPos)
                     // If _moveReadPos is true
                     readPos += 4; // Increase readPos by 4
@@ -268,7 +261,7 @@ namespace Server {
         public bool ReadBool(bool moveReadPos = true) {
             if (buffer.Count > readPos) {
                 // If there are unread bytes
-                var value = BitConverter.ToBoolean(readableBuffer, readPos); // Convert the bytes to a bool
+                bool value = BitConverter.ToBoolean(readableBuffer, readPos); // Convert the bytes to a bool
                 if (moveReadPos)
                     // If _moveReadPos is true
                     readPos += 1; // Increase readPos by 1
@@ -282,8 +275,8 @@ namespace Server {
         /// <param name="moveReadPos">Whether or not to move the buffer's read position.</param>
         public string ReadString(bool moveReadPos = true) {
             try {
-                var length = ReadInt(); // Get the length of the string
-                var value = Encoding.ASCII.GetString(readableBuffer, readPos, length); // Convert the bytes to a string
+                int length = ReadInt(); // Get the length of the string
+                string value = Encoding.ASCII.GetString(readableBuffer, readPos, length); // Convert the bytes to a string
                 if (moveReadPos && value.Length > 0)
                     // If _moveReadPos is true string is not empty
                     readPos += length; // Increase readPos by the length of the string
@@ -293,6 +286,37 @@ namespace Server {
             }
         }
 
+        /// <summary>Reads a string from the packet.</summary>
+        /// <param name="moveReadPos">Whether or not to move the buffer's read position.</param>
+        public Vector3 ReadVector3(bool moveReadPos = true) {
+            return new Vector3(ReadFloat(moveReadPos), ReadFloat(moveReadPos), ReadFloat(moveReadPos));
+        }
+
+        /// <summary>Reads a string from the packet.</summary>
+        /// <param name="moveReadPos">Whether or not to move the buffer's read position.</param> 
+        public Quaternion ReadQuaternion(bool moveReadPos = true) {
+            return new Quaternion(ReadFloat(moveReadPos), ReadFloat(moveReadPos), ReadFloat(moveReadPos),
+                ReadFloat(moveReadPos));
+        }
         #endregion
+
+        private bool disposed;
+
+        protected virtual void Dispose(bool disposing) {
+            if (!disposed) {
+                if (disposing) {
+                    buffer = null;
+                    readableBuffer = null;
+                    readPos = 0;
+                }
+
+                disposed = true;
+            }
+        }
+
+        public void Dispose() {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
     }
 }

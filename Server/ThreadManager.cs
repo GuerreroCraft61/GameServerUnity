@@ -31,7 +31,7 @@ namespace Server {
                     actionToExecuteOnMainThread = false;
                 }
 
-                for (var i = 0; i < executeCopiedOnMainThread.Count; i++) executeCopiedOnMainThread[i]();
+                foreach (Action t in executeCopiedOnMainThread) t();
             }
         }
     }

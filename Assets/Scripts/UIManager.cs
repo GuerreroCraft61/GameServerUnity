@@ -5,19 +5,16 @@ public class UIManager : MonoBehaviour {
     public static UIManager instance;
 
     public GameObject startMenu;
-    public InputField userNameField;
+    public InputField usernameField;
 
     private void Awake() {
-        if (instance == null) {
-            instance = this;
-        } else if (instance != this) {
-            Destroy(this);
-        }
+        if (instance == null) instance = this;
+        else if (instance != this) Destroy(this);
     }
 
     public void ConnectToServer() {
         startMenu.SetActive(false);
-        userNameField.interactable = false;
+        usernameField.interactable = false;
         Client.instance.ConnectToServer();
     }
 }
