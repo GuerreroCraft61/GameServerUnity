@@ -35,7 +35,9 @@ public class ThreadManager : MonoBehaviour {
                 actionToExecuteOnMainThread = false;
             }
 
-            for (int i = 0; i < executeCopiedOnMainThread.Count; i++) executeCopiedOnMainThread[i]();
+            foreach (Action t in executeCopiedOnMainThread) {
+                t();
+            }
         }
     }
 }
